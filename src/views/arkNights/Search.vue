@@ -1,5 +1,7 @@
 <template>
-    <div class="about">
-        <h1>寻访</h1>
-    </div>
+    <el-container>
+        <el-main>
+            111
+        </el-main>
+    </el-container>
 </template>
