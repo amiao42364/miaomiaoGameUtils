@@ -1,0 +1,45 @@
+.upCharacter1 {
+    color: #409EFF;
+}
+
+.upCharacter2 {
+    color: #F56C6C;
+}
+
+.line {
+    margin-top: 20px;
+}
+
+.tableShow {
+    display: none;
+}
+
+.level6Color {
+    color: #FF6600
+}
+
+.level5Color {
+    color: #FFCC00
+}
+
+.level4Color {
+    color: #CC00FF
+}
+
+.level3Color {
+    color: #6666FF
+}
+
+.characterIcon {
+    width: 25px;
+    height: 25px;
+    margin-top: 3px;
+}
+.el-tooltip__popper {
+    max-width: 400px;
+    line-height: 180%;
+}
+.ark-inline-block{
+    margin-left: 10px;
+    display: inline-block;
+}

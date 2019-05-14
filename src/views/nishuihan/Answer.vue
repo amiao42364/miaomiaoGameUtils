@@ -1,5 +1,9 @@
 <template>
-    <div class="about">
-        <h1>开发中……</h1>
-    </div>
+    <el-container style="background: #DCDFE6;">
+        <el-main>
+            <h1>
+                开发中……
+            </h1>
+        </el-main>
+    </el-container>
 </template>
