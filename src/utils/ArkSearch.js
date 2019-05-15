@@ -21,14 +21,14 @@ function search(count, baseData) {
             baseData.lv6Rate += 1;
         }
         // 判断是否抽到5星
-        let r2 = Math.floor(Math.random() * 100);
+        let r2 = Math.floor(Math.random() * (100 - baseData.lv6Rate));
         if (r2 < baseData.lv5Rate) {
             baseData.lv5Count += 1;
             addCharacter(baseData, 5);
             continue;
         }
         // 判断是否抽到4星
-        let r3 = Math.floor(Math.random() * 100);
+        let r3 = Math.floor(Math.random() * (100 - baseData.lv6Rate - baseData.lv5Rate));
         if (r3 < baseData.lv4Rate) {
             baseData.lv4Count += 1;
             addCharacter(baseData, 4);
