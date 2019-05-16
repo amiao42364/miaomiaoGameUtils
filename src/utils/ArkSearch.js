@@ -1,55 +1,51 @@
-import arkData from "../views/arkNights/ArkNightsData";
+import arkData from "../../public/ArkNightsData";
 import globalConfig from "../globalConfig";
 
 /**
  * 抽卡主方法
+ * @Param count 抽卡次数
+ * @Param baseData 基本数据
  */
 function search(count, baseData) {
     for (let i = 0; i < count; i++) {
         baseData.totalCount += 1;
-        // 先判断是否抽到6星
+        // 先判断人物星级
+        let level = 3;
         let r1 = Math.floor(Math.random() * 100);
         if (r1 < baseData.lv6Rate) {
+            level = 6;
             baseData.lv6Count += 1;
             baseData.lv6Rate = 2;
             baseData.noLv6Count = 0;
-            addCharacter(baseData, 6);
-            continue;
-        }
-        baseData.noLv6Count += 1;
-        if (baseData.noLv6Count > 50) {
-            baseData.lv6Rate += 1;
-        }
-        // 判断是否抽到5星
-        let r2 = Math.floor(Math.random() * (100 - baseData.lv6Rate));
-        if (r2 < baseData.lv5Rate) {
+        } else if (r1 < (baseData.lv6Rate + baseData.lv5Rate)) {
+            baseData.noLv6Count += 1;
             baseData.lv5Count += 1;
-            addCharacter(baseData, 5);
-            continue;
-        }
-        // 判断是否抽到4星
-        let r3 = Math.floor(Math.random() * (100 - baseData.lv6Rate - baseData.lv5Rate));
-        if (r3 < baseData.lv4Rate) {
+            level = 5;
+        } else if (r1 < (baseData.lv6Rate + baseData.lv5Rate + baseData.lv4Rate)) {
+            baseData.noLv6Count += 1;
             baseData.lv4Count += 1;
-            addCharacter(baseData, 4);
-            continue;
+            level = 4;
+        } else {
+            baseData.noLv6Count += 1;
+            baseData.lv3Count += 1;
         }
-        // 保底3星
-        baseData.lv3Count += 1;
-        addCharacter(baseData, 3);
+        if (baseData.noLv6Count > 50) {
+            baseData.lv6Rate += 2;
+        }
+        addCharacter(baseData, level);
     }
     return baseData;
 }
 
 /**
  * 抽取人物
- * @param baseData
- * @param level
+ * @param baseData 基本数据
+ * @param level 人物星级
  */
 function addCharacter(baseData, level) {
     // 判断是否为活动池
     let upCharacter = false;
-    if ((6 === level || 5 === level) && baseData.upValue) {
+    if (baseData.upValue) {
         let random = Math.floor(Math.random() * 100);
         if (random < 50) {
             upCharacter = true;
@@ -58,7 +54,7 @@ function addCharacter(baseData, level) {
     // 获取池子数据
     let pool = [];
     if (upCharacter) {
-        pool = 6 === level ? arkData.level6up : arkData.level5up;
+        pool = arkData["level" + level + "up"] == null ? arkData["level" + level] : arkData["level" + level + "up"];
     } else {
         pool = arkData["level" + level];
     }
@@ -83,7 +79,7 @@ function addCharacter(baseData, level) {
 }
 
 /**
- * 判断池子是否包含人物
+ * 判断自身是否包含人物并加入
  * @param selfPool
  * @param character
  */
@@ -100,6 +96,29 @@ function judgeContain(selfPool, character) {
         }
         character.count = 1;
         selfPool.push(character);
+    }
+}
+
+/**
+ * 判断卡池是否有重复数据
+ */
+function judgeData() {
+    let flag = true;
+    Object.keys(arkData).forEach(function (key) {
+        let arrays = arkData[key];
+        for (let i = 0; i < arrays.length; i++) {
+            let val1 = arrays[i].name;
+            for (let j = i+1; j < arrays.length; j++) {
+                let val2 = arrays[j].name;
+                if (val1 === val2) {
+                    flag = false;
+                    console.log("存在相同数据" + val1);
+                }
+            }
+        }
+    });
+    if (flag) {
+        console.log("数据正常");
     }
 }
 
@@ -130,7 +149,7 @@ function packageData(characterData, statisticData, result) {
             for (let i = 0; i < characters["level" + lv].length; i++) {
                 let indexAry = characters["level" + lv][i].index;
                 let indexStr = "";
-                if(indexAry.length > 10){
+                if (indexAry.length > 10) {
                     indexAry = indexAry.slice(0, 10);
                     indexStr = "…";
                 }
@@ -167,24 +186,21 @@ function getAppraise(lv6Count, totalCount) {
     // 数学期望34.5抽可以获得一个六星干员
     let avgRate = 0.02899;
     let actualRate = (lv6Count / totalCount).toFixed(5);
-    if(actualRate < 0.02){
+    if (actualRate < 0.02) {
         return "非洲大酋长";
-    }
-    else if(actualRate < (avgRate + 0.0025)){
+    } else if (actualRate < (avgRate + 0.0025)) {
         return "正常水平";
-    }
-    else if(actualRate < 0.06){
+    } else if (actualRate < 0.06) {
         return "有点欧了";
-    }
-    else if(actualRate < 0.1){
+    } else if (actualRate < 0.1) {
         return "欧皇附体";
-    }
-    else{
+    } else {
         return "你开挂了";
     }
 }
 
 export default {
     search,
-    statistics
+    statistics,
+    judgeData
 }

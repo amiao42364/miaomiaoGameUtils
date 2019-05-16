@@ -85,20 +85,6 @@
 <script>
     import arkSearch from "../../utils/ArkSearch";
 
-    let baseData = {
-        upValue: true,
-        totalCount: 0,
-        lv6Count: 0,
-        lv5Count: 0,
-        lv4Count: 0,
-        lv3Count: 0,
-        lv6Rate: 2,
-        lv5Rate: 8,
-        lv4Rate: 50,
-        lv3Rate: 40,
-        noLv6Count: 0,
-        characters: {}
-    };
     export default {
         data() {
             return {
@@ -121,10 +107,11 @@
                 } else {
                     this.upText = "关闭";
                 }
-                baseData.upValue = value;
+                this.$store.commit("arkNightsUp", value);
             },
             search(count) {
                 this.isShow = false;
+                let baseData = this.$store.state.arkNightsData;
                 let result = arkSearch.search(count, baseData);
                 arkSearch.statistics(result, this);
             },
@@ -136,7 +123,7 @@
                     lv5Count: 0,
                     appraise: "--"
                 }];
-                baseData = {
+                this.$store.commit("arkNightsModify", {
                     upValue: true,
                     totalCount: 0,
                     lv6Count: 0,
@@ -149,8 +136,13 @@
                     lv3Rate: 40,
                     noLv6Count: 0,
                     characters: {}
-                };
+                });
             }
+        },
+        created: function () {
+            // 验证卡池数据
+            arkSearch.judgeData(this.$store.state.arkNightsData);
+
         }
     };
 </script>
