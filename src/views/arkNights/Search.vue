@@ -142,7 +142,9 @@
         created: function () {
             // 验证卡池数据
             arkSearch.judgeData(this.$store.state.arkNightsData);
-
+        },
+        render: function (createElement) {
+            console.log("****");
         }
     };
 </script>
