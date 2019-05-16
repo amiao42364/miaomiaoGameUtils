@@ -1,4 +1,5 @@
 import arkData from "../../public/ArkNightsData";
+import common from "./common";
 import globalConfig from "../globalConfig";
 
 /**
@@ -54,7 +55,7 @@ function addCharacter(baseData, level) {
     // 获取池子数据
     let pool = [];
     if (upCharacter) {
-        pool = arkData["level" + level + "up"] == null ? arkData["level" + level] : arkData["level" + level + "up"];
+        pool = arkData["level" + level + "up"] == null || arkData["level" + level + "up"].length === 0 ? arkData["level" + level] : arkData["level" + level + "up"];
     } else {
         pool = arkData["level" + level];
     }
@@ -108,7 +109,7 @@ function judgeData() {
         let arrays = arkData[key];
         for (let i = 0; i < arrays.length; i++) {
             let val1 = arrays[i].name;
-            for (let j = i+1; j < arrays.length; j++) {
+            for (let j = i + 1; j < arrays.length; j++) {
                 let val2 = arrays[j].name;
                 if (val1 === val2) {
                     flag = false;
@@ -199,8 +200,46 @@ function getAppraise(lv6Count, totalCount) {
     }
 }
 
+/**
+ * 生成up池描述
+ * @returns {string}
+ */
+function generateUpContent(upSwitch) {
+    if (!upSwitch) {
+        return "当前关闭活动UP";
+    }
+    let content = "当前开启活动UP:";
+    let flag = false; //标记是否存在活动池
+    for (let level = 6; level >= 3; level--) {
+        if (arkData.hasOwnProperty("level" + level + "up")) {
+            let array = arkData["level" + level + "up"];
+            if (array.length > 0) {
+                if (flag) {
+                    content += ", ";
+                }
+                content += (common.convertNum2Chinese(level) + "星50%为");
+                for (let i = 0; i < array.length; i++) {
+                    if (i === 0) {
+                        flag = true;
+                    } else {
+                        content += "/";
+                    }
+                    content += "<span class='level" + level + "Color'>" + array[i].name + "</span>";
+                }
+            }
+        }
+    }
+    // 存在活动池
+    if (flag) {
+        return content;
+    } else {
+        return "当前无活动up";
+    }
+}
+
 export default {
     search,
     statistics,
-    judgeData
+    judgeData,
+    generateUpContent
 }

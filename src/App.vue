@@ -1,6 +1,6 @@
 <template>
     <el-row type="flex" justify="center" style="z-index: 1;">
-        <el-col :span="16">
+        <el-col :span="mainContainerWidth">
             <el-container>
                 <el-header>
                     <el-menu :default-active="$route.path" class="el-menu-demo" router mode="horizontal"
@@ -38,13 +38,15 @@
 </style>
 
 <script>
+    import common from "./utils/common";
     export default {
         data() {
             return {
                 mainRouteClass: {
                     "padding-top": "2px",
                     "height": document.documentElement.clientHeight - 80 + "px"
-                }
+                },
+                mainContainerWidth: common.isPC() ? 16 : 24
             };
         },
         methods: {
@@ -60,6 +62,27 @@
                     "height": document.documentElement.clientHeight - 80 + "px"
                 };
             };
-        }
+        },
+        watch:{
+            $route(to,from){
+                // 从明日方舟离开时销毁数据
+                if("/ArkNights/search" === from.path){
+                    this.$store.commit("arkNightsModify", {
+                        upValue: true,
+                        totalCount: 0,
+                        lv6Count: 0,
+                        lv5Count: 0,
+                        lv4Count: 0,
+                        lv3Count: 0,
+                        lv6Rate: 2,
+                        lv5Rate: 8,
+                        lv4Rate: 50,
+                        lv3Rate: 40,
+                        noLv6Count: 0,
+                        characters: {}
+                    });
+                }
+            }
+        },
     }
 </script>

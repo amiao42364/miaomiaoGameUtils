@@ -9,30 +9,27 @@
                         <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                     </div>
                 </el-tooltip>
-                <div class="ark-inline-block">
-                    <span>
-                        <el-switch v-model="upValue" active-color="#13ce66" inactive-color="#ff4949"
-                                   @change="upChange"></el-switch>
-                    </span>
-                    <span>
-                        {{upText}}活动up：六星中50%概率为 <span class="upCharacter1">能天使</span>/<span
-                            class="upCharacter2">安洁莉娜</span>
-                    </span>
-                </div>
+            </el-row>
+            <div class="line"></div>
+            <el-row>
+                <span>
+                    <el-switch v-model="upValue" active-color="#13ce66" inactive-color="#ff4949" @change="upChange"></el-switch>
+                </span>
+                <span v-html="upContext" style="margin-left: 5px;"></span>
             </el-row>
             <div class="line"></div>
             <el-row>
                 <el-table :data="statisticData" stripe border style="width: 100%;">
-                    <el-table-column prop="totalCount" label="寻访数" width="180"></el-table-column>
-                    <el-table-column prop="lv6Count" label="六星获取率" width="180"></el-table-column>
-                    <el-table-column prop="lv5Count" label="五星获取率" width="180"></el-table-column>
-                    <el-table-column prop="appraise" label="评价"></el-table-column>
+                    <el-table-column prop="totalCount" label="寻访数" min-width="20%"></el-table-column>
+                    <el-table-column prop="lv6Count" label="六星获取率" min-width="20%"></el-table-column>
+                    <el-table-column prop="lv5Count" label="五星获取率" min-width="20%"></el-table-column>
+                    <el-table-column prop="appraise" label="评价" min-width="40%"></el-table-column>
                 </el-table>
             </el-row>
             <div class="line"></div>
             <el-row v-bind:class="{tableShow: isShow}">
-                <el-table :data="characterData" stripe border height="625" style="width: 100%;">
-                    <el-table-column prop="level" label="稀有度" width="180">
+                <el-table :data="characterData" stripe border :height="tableHeight" style="width: 100%;">
+                    <el-table-column prop="level" label="稀有度" min-width="20%">
                         <template slot-scope="scope">
                             <div slot="reference">
                                 <span class="level6Color" v-if="6 === scope.row.level">★★★★★★</span>
@@ -42,7 +39,7 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="name" label="干员" width="180">
+                    <el-table-column prop="name" label="干员" min-width="40%">
                         <template slot-scope="scope">
                             <div slot="reference">
                                 <el-tooltip :content="scope.row.record" width="250" effect="light" placement="top">
@@ -66,13 +63,21 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="num" label="次数">
+                    <el-table-column prop="num" label="次数" min-width="40%">
                         <template slot-scope="scope">
                             <div slot="reference">
-                                <el-tooltip v-if="6 === scope.row.level" :content="scope.row.index" placement="top"><el-tag class="level6Color">{{scope.row.num}}次</el-tag></el-tooltip>
-                                <el-tooltip v-if="5 === scope.row.level" :content="scope.row.index" placement="top"><el-tag class="level5Color">{{scope.row.num}}次</el-tag></el-tooltip>
-                                <el-tooltip v-if="4 === scope.row.level" :content="scope.row.index" placement="top"><el-tag class="level4Color">{{scope.row.num}}次</el-tag></el-tooltip>
-                                <el-tooltip v-if="3 === scope.row.level" :content="scope.row.index" placement="top"><el-tag class="level3Color">{{scope.row.num}}次</el-tag></el-tooltip>
+                                <el-tooltip v-if="6 === scope.row.level" :content="scope.row.index" placement="top">
+                                    <el-tag class="level6Color">{{scope.row.num}}次</el-tag>
+                                </el-tooltip>
+                                <el-tooltip v-if="5 === scope.row.level" :content="scope.row.index" placement="top">
+                                    <el-tag class="level5Color">{{scope.row.num}}次</el-tag>
+                                </el-tooltip>
+                                <el-tooltip v-if="4 === scope.row.level" :content="scope.row.index" placement="top">
+                                    <el-tag class="level4Color">{{scope.row.num}}次</el-tag>
+                                </el-tooltip>
+                                <el-tooltip v-if="3 === scope.row.level" :content="scope.row.index" placement="top">
+                                    <el-tag class="level3Color">{{scope.row.num}}次</el-tag>
+                                </el-tooltip>
                             </div>
                         </template>
                     </el-table-column>
@@ -89,8 +94,9 @@
         data() {
             return {
                 upValue: true,
-                upText: "开启",
+                upContext: arkSearch.generateUpContent(true),
                 isShow: true,
+                tableHeight: document.documentElement.clientHeight - 370 + "px",
                 characterData: [],
                 statisticData: [{
                     totalCount: 0,
@@ -102,11 +108,7 @@
         },
         methods: {
             upChange(value) {
-                if (value) {
-                    this.upText = "开启";
-                } else {
-                    this.upText = "关闭";
-                }
+                this.upContext = arkSearch.generateUpContent(value);
                 this.$store.commit("arkNightsUp", value);
             },
             search(count) {
@@ -115,7 +117,7 @@
                 let result = arkSearch.search(count, baseData);
                 arkSearch.statistics(result, this);
             },
-            removeStatistic(){
+            removeStatistic() {
                 this.isShow = true;
                 this.statisticData = [{
                     totalCount: 0,
@@ -142,9 +144,6 @@
         created: function () {
             // 验证卡池数据
             arkSearch.judgeData(this.$store.state.arkNightsData);
-        },
-        render: function (createElement) {
-            console.log("****");
         }
     };
 </script>
