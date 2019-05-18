@@ -13,14 +13,23 @@
                         <el-submenu index="/ArkNights">
                             <template slot="title">明日方舟</template>
                             <el-menu-item index="/ArkNights/search">寻访模拟器</el-menu-item>
-                            <el-menu-item index="2-2" disabled>……</el-menu-item>
                         </el-submenu>
                         <el-submenu index="/nishuihan">
                             <template slot="title">逆水寒</template>
                             <el-menu-item index="/nishuihan/answer">科举答题器</el-menu-item>
-                            <el-menu-item index="2-2" disabled>……</el-menu-item>
                         </el-submenu>
-                        <el-menu-item index="3" disabled>开发中…</el-menu-item>
+                        <el-submenu index="/csGo">
+                            <template slot="title">CSGO</template>
+                            <el-menu-item index="/csGo/config">一键配置</el-menu-item>
+                        </el-submenu>
+                        <el-submenu index="/person" v-show="showPersonInfo" style="float: right;">
+                            <template slot="title">
+                                <el-image class="characterIcon" :src=headImg></el-image>
+                                {{nickName}}
+                            </template>
+                            <el-menu-item index="/person/info">个人中心</el-menu-item>
+                            <el-menu-item @click="logout">注销</el-menu-item>
+                        </el-submenu>
                     </el-menu>
                 </el-header>
                 <el-main v-bind:style="mainRouteClass">
@@ -32,26 +41,32 @@
 </template>
 
 <style>
-    body{
+    body {
         background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");
     }
 </style>
 
 <script>
-    import common from "./utils/common";
     export default {
         data() {
             return {
+                fullscreenLoading: false,
                 mainRouteClass: {
                     "padding-top": "2px",
                     "height": document.documentElement.clientHeight - 80 + "px"
                 },
-                mainContainerWidth: common.isPC() ? 16 : 24
+                mainContainerWidth: this.$commonUtil.isPC() ? 16 : 24
             };
         },
         methods: {
-            handleSelect(key, keyPath) {
-                // console.log(key, keyPath);
+            // 注销
+            logout() {
+                localStorage.removeItem(this.$globalConfig.MIAOMIAO_TOKEN_PREFIX);
+                sessionStorage.removeItem(this.$globalConfig.MIAOMIAO_TOKEN_PREFIX);
+                this.$store.commit("modifyPersonInfo", {
+                    showPersonInfo: false
+                });
+                this.$router.push("/");
             }
         },
         mounted() {
@@ -63,10 +78,21 @@
                 };
             };
         },
-        watch:{
-            $route(to,from){
+        computed: {
+            showPersonInfo() {
+                return this.$store.state.showPersonInfo;
+            },
+            headImg() {
+                return this.$store.state.headImg;
+            },
+            nickName() {
+                return this.$store.state.nickName;
+            }
+        },
+        watch: {
+            $route(to, from) {
                 // 从明日方舟离开时销毁数据
-                if("/ArkNights/search" === from.path){
+                if ("/ArkNights/search" === from.path) {
                     this.$store.commit("arkNightsModify", {
                         upValue: true,
                         totalCount: 0,

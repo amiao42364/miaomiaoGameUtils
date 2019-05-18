@@ -1,6 +1,7 @@
+import Vue from 'vue'
 import arkData from "../../public/ArkNightsData";
-import common from "./common";
-import globalConfig from "../globalConfig";
+
+let vm = new Vue();
 
 /**
  * 抽卡主方法
@@ -63,9 +64,9 @@ function addCharacter(baseData, level) {
     let random = Math.floor(Math.random() * pool.length);
     let character = pool[random];
     // 写入图片url
-    character.url = globalConfig.DEFAULT_OSS_URL + character.id + globalConfig.DEFAULT_OSS_SUFFIX;
+    character.url = vm.$globalConfig.DEFAULT_OSS_URL + character.id + vm.$globalConfig.DEFAULT_OSS_SUFFIX;
     // 写入当前序号
-    if ("index" in character) {
+    if ("Index.vue" in character) {
         character.index.push(baseData.totalCount);
     } else {
         character.index = [baseData.totalCount];
@@ -217,7 +218,7 @@ function generateUpContent(upSwitch) {
                 if (flag) {
                     content += ", ";
                 }
-                content += (common.convertNum2Chinese(level) + "星50%为");
+                content += (vm.$commonUtil.convertNum2Chinese(level) + "星50%为");
                 for (let i = 0; i < array.length; i++) {
                     if (i === 0) {
                         flag = true;

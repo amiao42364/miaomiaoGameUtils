@@ -1,3 +1,7 @@
+import Vue from "vue";
+
+let vm = new Vue();
+
 /**
  * 阿拉伯数字转换为汉字
  * @param num
@@ -38,7 +42,57 @@ function isPC() {
     return !/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 }
 
+/**
+ * 写入缓存
+ * @Param key key
+ * @Param value value
+ * @Param expired 过期时间(秒)
+ * @Param flagAlways 是否持久化存储
+ */
+function set(key, value, flagAlways, expired) {
+    sessionStorage.setItem(key, JSON.stringify(value));
+    if (flagAlways) {
+        let curTime = new Date().getTime();
+        let jsonValue = {data: value};
+        if (expired) {
+            jsonValue.expiredTime = curTime + 1000 * expired;
+        } else {
+            jsonValue.expiredTime = curTime + 1000 * 3600 * 24 * 7;
+        }
+        localStorage.setItem(key, JSON.stringify(jsonValue));
+    }
+}
+
+/**
+ * 从缓存读取
+ * @param key
+ */
+function get(key) {
+    let jsonData = sessionStorage.getItem(key);
+    if (jsonData != null) {
+        let value = JSON.parse(jsonData);
+        if(value === ""){
+            return null
+        }
+        return value;
+    }
+
+    jsonData = localStorage.getItem(key);
+    if (jsonData == null) {
+        return null;
+    }
+    let value = JSON.parse(jsonData);
+    if (new Date().getTime() - value.expiredTime > 0) {
+        localStorage.removeItem(key);
+        return null;
+    } else {
+        return value.data === "" ? null : value.data;
+    }
+}
+
 export default {
     convertNum2Chinese,
-    isPC
+    isPC,
+    get,
+    set
 }
