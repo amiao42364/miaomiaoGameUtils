@@ -66,16 +66,16 @@
                     <el-table-column prop="num" label="次数" min-width="40%">
                         <template slot-scope="scope">
                             <div slot="reference">
-                                <el-tooltip v-if="6 === scope.row.level" :content="scope.row.Index" placement="top">
+                                <el-tooltip v-if="6 === scope.row.level" :content="scope.row.index" placement="top">
                                     <el-tag class="level6Color">{{scope.row.num}}次</el-tag>
                                 </el-tooltip>
-                                <el-tooltip v-if="5 === scope.row.level" :content="scope.row.Index" placement="top">
+                                <el-tooltip v-if="5 === scope.row.level" :content="scope.row.index" placement="top">
                                     <el-tag class="level5Color">{{scope.row.num}}次</el-tag>
                                 </el-tooltip>
-                                <el-tooltip v-if="4 === scope.row.level" :content="scope.row.Index" placement="top">
+                                <el-tooltip v-if="4 === scope.row.level" :content="scope.row.index" placement="top">
                                     <el-tag class="level4Color">{{scope.row.num}}次</el-tag>
                                 </el-tooltip>
-                                <el-tooltip v-if="3 === scope.row.level" :content="scope.row.Index" placement="top">
+                                <el-tooltip v-if="3 === scope.row.level" :content="scope.row.index" placement="top">
                                     <el-tag class="level3Color">{{scope.row.num}}次</el-tag>
                                 </el-tooltip>
                             </div>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-    import arkSearch from "../../utils/ArkSearch";
+    import arkSearch from "./ArkSearch";
 
     export default {
         data() {

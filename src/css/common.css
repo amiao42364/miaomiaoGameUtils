@@ -35,11 +35,28 @@
     height: 25px;
     margin-top: 3px;
 }
+
 .el-tooltip__popper {
     max-width: 400px;
     line-height: 180%;
 }
-.ark-inline-block{
+
+.ark-inline-block {
     margin-left: 10px;
     display: inline-block;
+}
+
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+}
+
+.button {
+    padding: 0;
+    float: right;
+}
+
+.image {
+    width: 100%;
+    display: block;
 }

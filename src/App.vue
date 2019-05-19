@@ -2,7 +2,7 @@
     <el-row type="flex" justify="center" style="z-index: 1;">
         <el-col :span="mainContainerWidth">
             <el-container>
-                <el-header>
+                <el-header style="height: 100%;">
                     <el-menu :default-active="$route.path" class="el-menu-demo" router mode="horizontal"
                              @select="handleSelect" background-color="#545c64" text-color="#fff"
                              active-text-color="#ffd04b">
@@ -13,6 +13,7 @@
                         <el-submenu index="/ArkNights">
                             <template slot="title">明日方舟</template>
                             <el-menu-item index="/ArkNights/search">寻访模拟器</el-menu-item>
+                            <el-menu-item index="/ArkNights/count">精英材料计算</el-menu-item>
                         </el-submenu>
                         <el-submenu index="/nishuihan">
                             <template slot="title">逆水寒</template>

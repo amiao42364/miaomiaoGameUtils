@@ -26,6 +26,11 @@ const vueRouter = new VueRouter({
             component: () => import('../views/arkNights/Search.vue')
         },
         {
+            path: '/ArkNights/count',
+            name: '明日方舟-精英材料计算',
+            component: () => import('../views/arkNights/ItemCount.vue')
+        },
+        {
             path: '/nishuihan/answer',
             name: '逆水寒-科举答题器',
             component: () => import('../views/nishuihan/Answer.vue')
