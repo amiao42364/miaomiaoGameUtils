@@ -14,7 +14,8 @@ module.exports = {
             'vuex': 'Vuex',
             'vue-router': 'VueRouter',
             'element-ui': 'ELEMENT',
-            'Axios':'axios'
+            'Axios': 'axios',
+            'Clipboard': 'clipboard'
         },
         plugins: [
             new BundleAnalyzerPlugin()
