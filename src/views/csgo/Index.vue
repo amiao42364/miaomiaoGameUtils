@@ -4,7 +4,7 @@
             <el-card class="box-card">
                 <div slot="header">
                     <span>csgo启动项配置</span>
-                    <el-button id="csgo_copy" @click="save" style="margin-left: 15px;" size="small" type="success">点我复制到粘贴板</el-button>
+                    <el-button id="csgo_copy" @click="save" style="margin-left: 15px;" size="small" type="success" :disabled="isDisabled">点我复制到粘贴板</el-button>
                 </div>
                 <el-row>
                     <el-input
@@ -71,12 +71,19 @@
     export default {
         data() {
             return {
-                csgoConf: ""
+                csgoConf: "",
+                isDisabled: false
             };
         },
         methods: {
             save: function () {
                 const _this = this;
+                // 防止按钮多次点击
+                _this.isDisabled = true;
+                setTimeout(function () {
+                    _this.isDisabled = false;
+                }, 500);
+
                 _this.axios.post(_this.$globalConfig.DEFAULT_API_URL + "/csgo/startUp", {
                     startUp: _this.csgoConf
                 });

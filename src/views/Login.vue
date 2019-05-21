@@ -46,7 +46,8 @@
                         </el-form-item>
                     </el-tooltip>
                     <el-form-item style="text-align: center;">
-                        <el-button type="primary" @click="register()" :disabled="isDisabled">注册并登录</el-button>
+                        <el-button type="primary" @click="register" :disabled="isDisabled">注册并登录</el-button>
+                        <el-button type="primary" @click="returnLogin">返回登录</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -131,6 +132,12 @@
         methods: {
             login() {
                 const _this = this;
+                // 防止按钮多次点击
+                _this.isDisabled = true;
+                setTimeout(function () {
+                    _this.isDisabled = false;
+                }, 500);
+
                 _this.$refs.loginForm.validate((valid) => {
                     if (valid) {
                         _this.axios.post(this.$globalConfig.DEFAULT_API_URL + "/user/login", this.loginForm)
@@ -139,12 +146,6 @@
                             });
                     }
                 });
-
-                // 防止按钮多次点击
-                _this.isDisabled = true;
-                setTimeout(function () {
-                    _this.isDisabled = false;
-                }, 500);
             },
             registerOpen() {
                 this.showLogin = false;
@@ -152,6 +153,12 @@
             },
             register() {
                 const _this = this;
+                // 防止按钮多次点击
+                _this.isDisabled = true;
+                setTimeout(function () {
+                    _this.isDisabled = false;
+                }, 500);
+
                 _this.$refs.registerForm.validate((valid) => {
                     if (valid) {
                         _this.axios.post(this.$globalConfig.DEFAULT_API_URL + "/user/register", this.registerForm)
@@ -160,11 +167,10 @@
                             });
                     }
                 });
-                // 防止按钮多次点击
-                _this.isDisabled = true;
-                setTimeout(function () {
-                    _this.isDisabled = false;
-                }, 500);
+            },
+            returnLogin: function(){
+                this.showLogin = true;
+                this.showRegister = false;
             },
             doResponse(response) {
                 const _this = this;

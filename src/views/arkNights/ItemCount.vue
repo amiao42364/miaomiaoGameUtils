@@ -1,27 +1,35 @@
 <template>
     <el-container style="height: 100%; background: #DCDFE6">
         <el-header style="height: auto;">
-            <h1>请选择需要的材料及数量</h1>
+            <h1>请输入需要的材料及已拥有的数量，点击过滤去除不相关及数量足够的物品</h1>
+            <h6>算法也许写的会有问题，掉落地点也有可能有错误，发现任何问题立即联系阿喵修改哦</h6>
             <el-row>
                 <el-button size="mini" type="primary" @click="resetNum">重置</el-button>
                 <el-button size="mini" type="success" @click="filter">过滤</el-button>
             </el-row>
         </el-header>
         <el-main style="margin-top: 10px">
-            <el-col class="item-col" v-show="baseData[key].isShow" v-for="key in Object.keys(baseData)">
-                <el-card :body-style="{ padding: '0px' }">
-                    <!--<img :src="getItemImg(baseData[key].name)" class="image" :alt="baseData[key].name">-->
-                    <div class="card-main">
+            <el-col v-bind:style="itemColStyle(baseData[key]['colorId'])" v-show="baseData[key].isShow" v-for="key in Object.keys(baseData)">
+                <el-card :body-style="{ padding: '0px' }" class="card-main">
+                    <el-tooltip :content="baseData[key].desc" placement="bottom" effect="light">
+                        <img :src="getItemImg(baseData[key].name)" class="image" :alt="baseData[key].name">
+                    </el-tooltip>
+                    <div class="card-text">
                         <span v-bind:style="boxFontStyle(baseData[key]['colorId'])">{{baseData[key].name}}</span>
+                        <br>
                         <span v-html="baseData[key].needHtml"></span>
-                        <div class="bottom">
-                            <el-input @input="numInput" style="width: 50%" v-model="baseData[key].require"
-                                      size="mini"
-                                      placeholder="需求"></el-input>
-                            <el-input @input="numInput" style="width: 50%" v-model="baseData[key].have"
-                                      size="mini"
-                                      placeholder="已有"></el-input>
-                        </div>
+                    </div>
+                    <el-row style="border-top: 1px solid #000000"></el-row>
+                    <div class="card-drop">
+                        <span v-for="dropKey in Object.keys(baseData[key].drop)">{{dropKey}}：{{baseData[key].drop[dropKey]}}<br></span>
+                    </div>
+                    <div class="card-bottom">
+                        <el-input @input="numInputRequire(key)" style="width: 50%" v-model="baseData[key].require"
+                                  size="mini"
+                                  placeholder="需求"></el-input>
+                        <el-input @input="numInputHave(key)" style="width: 50%" v-model="baseData[key].have"
+                                  size="mini"
+                                  placeholder="已有"></el-input>
                     </div>
                 </el-card>
             </el-col>
@@ -31,9 +39,27 @@
 
 <style>
     .item-col {
-        margin-right: 20px;
-        margin-bottom: 20px;
-        width: 150px;
+
+    }
+
+    .card-text {
+        text-align: center;
+        font-size: 14px;
+        height: 40px;
+    }
+
+    .card-drop {
+        text-align: center;
+        font-size: 14px;
+        height: 40px;
+    }
+
+    .card-bottom {
+
+    }
+
+    .card-main {
+        width: 108px;
     }
 
 </style>
@@ -62,11 +88,19 @@
                     "20": "#CC00FF",
                     "30": "#6666FF",
                     "40": "#67C23A",
-                    "50": "#FFFFFF",
+                    "50": "#000000",
                 },
                 boxFontStyle: function (colorId) {
                     return {
                         "color": this.colorData[colorId]
+                    }
+                },
+                itemColStyle: function (colorId) {
+                    return {
+                        "margin-right": "10px",
+                        "margin-bottom": "10px",
+                        "width": "114px",
+                        "border": "2px solid " + this.colorData[colorId]
                     }
                 }
             };
@@ -89,30 +123,46 @@
             filter: function () {
                 const _this = this;
                 Object.keys(_this.baseData).forEach(function (key) {
-                    if(_this.baseData[key].need <= 0){
+                    if (_this.baseData[key].need <= 0) {
                         _this.baseData[key].isShow = false;
                     }
                 });
             },
-            numInput: function () {
+            numInputRequire: function (key) {
+                let require = this.baseData[key].require;
+                // 限制只能输入0-99
+                require = require.replace(/[^0-9]/ig,"");
+                if(Number.parseInt(require) > 99){
+                    require = "99";
+                }
+                this.baseData[key].require = require;
+                this.numInput();
+            },
+            numInputHave: function (key) {
+                let have = this.baseData[key].have;
+                // 限制只能输入0-99
+                have = have.replace(/[^0-9]/ig,"");
+                if(Number.parseInt(have) > 99){
+                    have = "99";
+                }
+                this.baseData[key].have = have;
+                this.numInput();
+            },
+            numInput: function (inputValue) {
                 const _this = this;
+                // 只允许0-99
+                inputValue = isNaN(Number.parseInt(inputValue)) ? 0 : Number.parseInt(inputValue);
+
 
                 Object.keys(_this.baseData).forEach(function (key) {
-
-                    if("RMA70-24" === _this.baseData[key].name){
-                        console.log()
-                    }
-
                     let item = _this.baseData[key];
                     let require = isNaN(Number.parseInt(item.require)) ? 0 : Number.parseInt(item.require);
                     let parentRequire = isNaN(Number.parseInt(item.parentRequire)) ? 0 : Number.parseInt(item.parentRequire);
                     let have = isNaN(Number.parseInt(item.have)) ? 0 : Number.parseInt(item.have);
-                    // 判断子材料的数量
+                    let subHave = _this.getSubHave(item);
+
                     require += parentRequire;
-                    if (require > 0) {
-                        let subHave = _this.getSubHave(item);
-                        have += subHave;
-                    }
+                    have += subHave;
                     let need = require - have;
                     _this.baseData[key].need = need;
                     if (need > 0) {
@@ -121,7 +171,7 @@
                         let sub = item['subId'];
                         Object.keys(sub).forEach(function (key) {
                             let temp = isNaN(Number.parseInt(item.parentRequire)) ? 0 : Number.parseInt(item.parentRequire);
-                            temp +=  (need * sub[key]);
+                            temp += ((need + subHave) * sub[key]);
                             _this.baseData[key].parentRequire = temp;
                         });
                     } else {

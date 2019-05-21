@@ -13,7 +13,7 @@
                         <el-submenu index="/ArkNights">
                             <template slot="title">明日方舟</template>
                             <el-menu-item index="/ArkNights/search">寻访模拟器</el-menu-item>
-                            <el-menu-item index="/ArkNights/count">精英材料计算</el-menu-item>
+                             <el-menu-item index="/ArkNights/count">精英材料计算</el-menu-item>
                         </el-submenu>
                         <el-submenu index="/csGo">
                             <template slot="title">CSGO</template>
