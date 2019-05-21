@@ -15,10 +15,6 @@
                             <el-menu-item index="/ArkNights/search">寻访模拟器</el-menu-item>
                             <el-menu-item index="/ArkNights/count">精英材料计算</el-menu-item>
                         </el-submenu>
-                        <el-submenu index="/nishuihan">
-                            <template slot="title">逆水寒</template>
-                            <el-menu-item index="/nishuihan/answer">科举答题器</el-menu-item>
-                        </el-submenu>
                         <el-submenu index="/csGo">
                             <template slot="title">CSGO</template>
                             <el-menu-item index="/csGo/config">一键配置</el-menu-item>
