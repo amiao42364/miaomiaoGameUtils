@@ -148,12 +148,8 @@
                 this.baseData[key].have = have;
                 this.numInput();
             },
-            numInput: function (inputValue) {
+            numInput: function () {
                 const _this = this;
-                // 只允许0-99
-                inputValue = isNaN(Number.parseInt(inputValue)) ? 0 : Number.parseInt(inputValue);
-
-
                 Object.keys(_this.baseData).forEach(function (key) {
                     let item = _this.baseData[key];
                     let require = isNaN(Number.parseInt(item.require)) ? 0 : Number.parseInt(item.require);
