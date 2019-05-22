@@ -119,9 +119,7 @@
                     require = "99";
                 }
                 this.baseData[key].require = require;
-                if (require !== "") {
-                    this.numInput();
-                }
+                this.numInput();
             },
             numInputHave: function (key) {
                 let have = this.baseData[key].have;
@@ -131,12 +129,12 @@
                     have = "99";
                 }
                 this.baseData[key].have = have;
-                if (have !== "") {
-                    this.numInput();
-                }
+                this.numInput();
             },
             numInput: function () {
                 const _this = this;
+                // 用来防止真正需求的子材料被其他父材料刷掉
+                let requireAry = [];
                 Object.keys(_this.baseData).forEach(function (key) {
                     let item = _this.baseData[key];
                     let require = isNaN(Number.parseInt(item.require)) ? 0 : Number.parseInt(item.require);
@@ -148,11 +146,13 @@
                     have += subHave;
                     let need = require - have;
                     _this.baseData[key].need = need;
+
                     if (need > 0) {
                         item.needHtml = "<span>还需要</span><span style='color: #FF6600'>" + need + "</span><span>个</span>";
                         // 写入子材料的需求
                         let sub = item['subId'];
                         Object.keys(sub).forEach(function (key) {
+                            requireAry.push(key);
                             let temp = isNaN(Number.parseInt(item.parentRequire)) ? 0 : Number.parseInt(item.parentRequire);
                             temp += ((need + subHave) * sub[key]);
                             _this.baseData[key].parentRequire = temp;
@@ -163,7 +163,9 @@
                         // 写入子材料的需求
                         let sub = item['subId'];
                         Object.keys(sub).forEach(function (key) {
-                            _this.baseData[key].parentRequire = "";
+                            if(requireAry.indexOf(key) < 0){
+                                _this.baseData[key].parentRequire = "";
+                            }
                         });
                     }
 
