@@ -9,7 +9,8 @@
             </el-row>
         </el-header>
         <el-main style="margin-top: 10px">
-            <el-col v-bind:style="itemColStyle(baseData[key]['colorId'])" v-show="baseData[key].isShow" v-for="key in Object.keys(baseData)">
+            <el-col v-bind:style="itemColStyle(baseData[key]['colorId'])" v-show="baseData[key].isShow"
+                    v-for="key in Object.keys(baseData)">
                 <el-card :body-style="{ padding: '0px' }" class="card-main">
                     <el-tooltip :content="baseData[key].desc" placement="bottom" effect="light">
                         <img :src="getItemImg(baseData[key].name)" class="image" :alt="baseData[key].name">
@@ -65,7 +66,7 @@
 </style>
 
 <script>
-    import itemData from "../../../public/ArlNightsItemData.json";
+    import itemData from "../../../public/ArkNightsItemData.json";
 
     function getDefaultData() {
         Object.keys(itemData).forEach(function (key) {
@@ -131,22 +132,26 @@
             numInputRequire: function (key) {
                 let require = this.baseData[key].require;
                 // 限制只能输入0-99
-                require = require.replace(/[^0-9]/ig,"");
-                if(Number.parseInt(require) > 99){
+                require = require.replace(/[^0-9]/ig, "");
+                if (Number.parseInt(require) > 99) {
                     require = "99";
                 }
                 this.baseData[key].require = require;
-                this.numInput();
+                if (require !== "") {
+                    this.numInput();
+                }
             },
             numInputHave: function (key) {
                 let have = this.baseData[key].have;
                 // 限制只能输入0-99
-                have = have.replace(/[^0-9]/ig,"");
-                if(Number.parseInt(have) > 99){
+                have = have.replace(/[^0-9]/ig, "");
+                if (Number.parseInt(have) > 99) {
                     have = "99";
                 }
                 this.baseData[key].have = have;
-                this.numInput();
+                if (have !== "") {
+                    this.numInput();
+                }
             },
             numInput: function () {
                 const _this = this;
