@@ -39,10 +39,6 @@
 </template>
 
 <style>
-    .item-col {
-
-    }
-
     .card-text {
         text-align: center;
         font-size: 14px;
@@ -66,24 +62,10 @@
 </style>
 
 <script>
-    import itemData from "../../../public/ArkNightsItemData.json";
-
-    function getDefaultData() {
-        Object.keys(itemData).forEach(function (key) {
-            itemData[key].need = 0;
-            itemData[key].have = "";
-            itemData[key].require = "";
-            itemData[key].parentRequire = "";
-            itemData[key].needHtml = "";
-            itemData[key].isShow = true;
-        });
-        return itemData;
-    }
-
     export default {
         data() {
             return {
-                baseData: getDefaultData(),
+                baseData: {},
                 colorData: {
                     "10": "#FF6600",
                     "20": "#CC00FF",
@@ -108,7 +90,7 @@
         },
         methods: {
             getItemImg: function (name) {
-                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + name + this.$globalConfig.DEFAULT_OSS_SUFFIX;
+                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + name + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_100";
             },
             resetNum: function () {
                 const _this = this;
@@ -218,6 +200,22 @@
                 }
                 return count;
             }
+        },
+        created() {
+            const _this = this;
+            _this.axios.get(_this.$globalConfig.DEFAULT_API_URL + "/json/ark?type=items")
+                .then(function (response) {
+                    let data = response.content;
+                    Object.keys(data).forEach(function (key) {
+                        data[key].need = 0;
+                        data[key].have = "";
+                        data[key].require = "";
+                        data[key].parentRequire = "";
+                        data[key].needHtml = "";
+                        data[key].isShow = true;
+                    });
+                    _this.baseData = data;
+                });
         }
     };
 </script>

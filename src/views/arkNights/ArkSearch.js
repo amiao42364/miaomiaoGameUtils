@@ -64,7 +64,7 @@ function addCharacter(baseData, level) {
     let random = Math.floor(Math.random() * pool.length);
     let character = pool[random];
     // 写入图片url
-    character.url = vm.$globalConfig.DEFAULT_OSS_URL_CHARACTER + character.id + vm.$globalConfig.DEFAULT_OSS_SUFFIX;
+    character.url = vm.$globalConfig.DEFAULT_OSS_URL_CHARACTER + character.id + vm.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_25";
     // 写入当前序号
     if ("Index.vue" in character) {
         character.index.push(baseData.totalCount);
