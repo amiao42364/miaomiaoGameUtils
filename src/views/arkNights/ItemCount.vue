@@ -148,14 +148,13 @@
                     _this.baseData[key].need = need;
 
                     if (need > 0) {
+                        item.isShow = true;
                         item.needHtml = "<span>还需要</span><span style='color: #FF6600'>" + need + "</span><span>个</span>";
                         // 写入子材料的需求
                         let sub = item['subId'];
-                        Object.keys(sub).forEach(function (key) {
-                            requireAry.push(key);
-                            let temp = isNaN(Number.parseInt(item.parentRequire)) ? 0 : Number.parseInt(item.parentRequire);
-                            temp += ((need + subHave) * sub[key]);
-                            _this.baseData[key].parentRequire = temp;
+                        Object.keys(sub).forEach(function (subKey) {
+                            requireAry.push(subKey);
+                            _this.baseData[subKey].parentRequire = ((need + subHave) * sub[subKey]);
                         });
                     } else {
                         item.needHtml = "";
