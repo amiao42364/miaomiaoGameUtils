@@ -7,22 +7,7 @@ export default new Vuex.Store({
         // 是否展示个人信息
         showPersonInfo: false,
         headImg: "https://arknights.oss-cn-shanghai.aliyuncs.com/default_headImg.png",
-        nickName: "喵喵",
-        // 明日方舟抽卡初始数据
-        arkNightsData: {
-            upValue: true,  // 是否开启up池
-            totalCount: 0,  // 总抽卡次数
-            lv6Count: 0,    // 获得6星总数
-            lv5Count: 0,    // 获得5星总数
-            lv4Count: 0,    // 获得4星总数
-            lv3Count: 0,    // 获得3星总数
-            lv6Rate: 2,     // 获取6星概率
-            lv5Rate: 8,     // 获取5星概率
-            lv4Rate: 50,    // 获取4星概率
-            lv3Rate: 40,    // 获取3星概率
-            noLv6Count: 0,  // 没有获得六星的累计次数
-            characters: {}  // 已经抽取到的人物
-        }
+        nickName: "喵喵"
     },
     mutations: {
         // 修改个人信息展示
@@ -34,12 +19,6 @@ export default new Vuex.Store({
             if (data.nickName != null) {
                 state.nickName = data.nickName;
             }
-        },
-        arkNightsModify(state, data) {
-            state.arkNightsData = data;
-        },
-        arkNightsUp(state, upValue) {
-            state.arkNightsData.upValue = upValue;
         }
     },
     actions: {
