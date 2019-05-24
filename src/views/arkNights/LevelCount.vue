@@ -320,13 +320,23 @@
                     }
                 }
                 totalExp = totalExp - _this.curExp - 2000 * _this.curBookLv4 - 1000 * _this.curBookLv3 - 400 * _this.curBookLv2 - 200 * _this.curBookLv1;
+                if (totalExp < 0) {
+                    totalExp = 0;
+                }
                 totalMoney = totalMoney - _this.curMoney;
-                const expNum = Math.ceil(totalExp / 7500);
-                const moneyNum = Math.ceil(totalMoney / 7500);
+                if (totalMoney < 0) {
+                    totalMoney = 0;
+                }
+                let expNum = Math.ceil(totalExp / 7500);
+                let moneyNum = Math.ceil(totalMoney / 7500);
 
                 _this.resultHtml = "";
-                _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalExp + "</span>经验值，需打LS-5<span style='color: firebrick;'>" + expNum + "</span>次</p>";
-                _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalMoney + "</span>龙门币，需打CE-5<span style='color: firebrick;'>" + moneyNum + "</span>次</p>";
+                if (totalExp > 0) {
+                    _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalExp + "</span>经验值，需打LS-5<span style='color: firebrick;'>" + expNum + "</span>次</p>";
+                }
+                if (totalMoney > 0) {
+                    _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalMoney + "</span>龙门币，需打CE-5<span style='color: firebrick;'>" + moneyNum + "</span>次</p>";
+                }
                 _this.resultHtml += "<p>一共需要<span style='color: firebrick;'>" + 30 * (expNum + moneyNum) + "</span>体力</p>";
             }
         },
