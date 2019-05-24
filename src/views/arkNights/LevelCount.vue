@@ -44,11 +44,11 @@
                                 </el-input>
                             </el-row>
                             <el-row class="row-class">
-                                <span style="width: 125px;">当前经验：</span>
+                                <span style="width: 100px;">当前经验：</span>
                                 <el-input @input="inputCurExp" clearable v-model="curExp" placeholder="经验"></el-input>
                             </el-row>
                             <el-row class="row-class">
-                                <span style="width: 125px;">当前金钱：</span>
+                                <span style="width: 100px;">当前金钱：</span>
                                 <el-input @input="inputCurMoney" v-model="curMoney" clearable placeholder="龙门币"></el-input>
                             </el-row>
                             <el-row class="row-class">
@@ -69,7 +69,7 @@
                             </el-row>
                         </el-card>
                     </el-col>
-                    <el-col :span="rowColl" style="margin-left: 20px;">
+                    <el-col :span="rowColl" v-bind:style="rowCollStyle">
                         <el-card class="box-card" shadow="always">
                             <div slot="header">
                                 结果
@@ -102,6 +102,10 @@
         width: 65px;
     }
 
+    .el-card__body {
+        padding: 15px
+    }
+
 </style>
 
 <script>
@@ -110,6 +114,10 @@
             return {
                 levelData: {},
                 rowColl: this.$commonUtil.isPC() ? 11 : 24,
+                rowCollStyle: {
+                    "margin-left": this.$commonUtil.isPC() ? "20px" : "0",
+                    "margin-top": this.$commonUtil.isPC() ? "0" : "20px"
+                },
                 resultHtml: "",
                 bookLevel4: "https://arknights.oss-cn-shanghai.aliyuncs.com/items/高级经验书.png?x-oss-process=image/resize,w_40",
                 bookLevel3: "https://arknights.oss-cn-shanghai.aliyuncs.com/items/中级经验书.png?x-oss-process=image/resize,w_40",
@@ -142,15 +150,17 @@
                 if ("一星干员" === value || "二星干员" === value) {
                     this.disabledPower1 = true;
                     this.disabledPower2 = true;
+                    this.targetPower = "0";
                 } else if ("三星干员" === value) {
                     this.disabledPower2 = true;
+                    this.targetPower = "1";
                 } else {
                     this.disabledPower1 = false;
                     this.disabledPower2 = false;
+                    this.targetPower = "2";
                 }
                 this.curPower = "0";
                 this.curLevel = 1;
-                this.targetPower = "2";
                 this.targetLevel = 1;
                 this.curExp = 0;
             },
@@ -315,8 +325,8 @@
                 const moneyNum = Math.ceil(totalMoney / 7500);
 
                 _this.resultHtml = "";
-                _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalExp + "</span>经验值，需要打LS-5<span style='color: firebrick;'>" + expNum + "</span>次</p>";
-                _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalMoney + "</span>龙门币，需要CE-5<span style='color: firebrick;'>" + moneyNum + "</span>次</p>";
+                _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalExp + "</span>经验值，需打LS-5<span style='color: firebrick;'>" + expNum + "</span>次</p>";
+                _this.resultHtml += "<p>还需要<span style='color: firebrick;'>" + totalMoney + "</span>龙门币，需打CE-5<span style='color: firebrick;'>" + moneyNum + "</span>次</p>";
                 _this.resultHtml += "<p>一共需要<span style='color: firebrick;'>" + 30 * (expNum + moneyNum) + "</span>体力</p>";
             }
         },

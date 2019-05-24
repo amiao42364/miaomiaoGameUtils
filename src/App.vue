@@ -1,5 +1,5 @@
 <template>
-    <el-row type="flex" justify="center" style="z-index: 1;">
+    <el-row type="flex" justify="center" v-bind:style="defaultStyle">
         <el-col :span="mainContainerWidth">
             <el-container>
                 <el-header style="height: 100%;">
@@ -40,7 +40,7 @@
 
 <style>
     body {
-        background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");
+        /*background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");*/
     }
 </style>
 
@@ -52,6 +52,9 @@
                 mainRouteClass: {
                     "padding-top": "2px",
                     "height": document.documentElement.clientHeight - 80 + "px"
+                },
+                defaultStyle: {
+                    "font-size": this.$commonUtil.isPC() ? "15px" : "12px"
                 },
                 mainContainerWidth: this.$commonUtil.isPC() ? 16 : 24
             };
