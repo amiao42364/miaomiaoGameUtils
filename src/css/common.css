@@ -1,3 +1,13 @@
+.float-left {
+    float: left;
+}
+.el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+}
+.el-icon-arrow-down {
+    font-size: 12px;
+}
 .upCharacter1 {
     color: #409EFF;
 }
