@@ -6,7 +6,7 @@ export default new Vuex.Store({
         count: 0,
         // 是否展示个人信息
         showPersonInfo: false,
-        headImg: "https://arknights.oss-cn-shanghai.aliyuncs.com/default_headImg.png",
+        headImg: "https://arknights.oss-cn-shanghai.aliyuncs.com/default_headImg.png?x-oss-process=image/resize,w_25",
         nickName: "喵喵"
     },
     mutations: {

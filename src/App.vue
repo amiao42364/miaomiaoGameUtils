@@ -8,13 +8,14 @@
                              active-text-color="#ffd04b">
                         <el-menu-item index="/readme">
                             <el-image class="characterIcon"
-                                      src="https://arknights.oss-cn-shanghai.aliyuncs.com/miaomiao.png"></el-image>
+                                      src="https://arknights.oss-cn-shanghai.aliyuncs.com/miaomiao.png?x-oss-process=image/resize,w_25"></el-image>
                         </el-menu-item>
                         <el-submenu index="/ArkNights">
                             <template slot="title">明日方舟</template>
                             <el-menu-item index="/ArkNights/search">干员寻访模拟器</el-menu-item>
                             <el-menu-item index="/ArkNights/count">精英材料计算</el-menu-item>
                             <el-menu-item index="/ArkNights/level">干员升级计算</el-menu-item>
+                            <el-menu-item index="/ArkNights/hr">公开招募计算</el-menu-item>
                         </el-submenu>
                         <el-submenu index="/csGo">
                             <template slot="title">CSGO</template>
@@ -40,7 +41,7 @@
 
 <style>
     body {
-        background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");
+        /*background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");*/
     }
 </style>
 
