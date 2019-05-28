@@ -4,7 +4,7 @@
             <el-container>
                 <el-header style="height: 100%;">
                     <el-menu :default-active="$route.path" class="el-menu-demo" router mode="horizontal"
-                             @select="handleSelect" background-color="#545c64" text-color="#fff"
+                             background-color="#545c64" text-color="#fff"
                              active-text-color="#ffd04b">
                         <el-menu-item index="/readme">
                             <el-image class="characterIcon"
@@ -41,7 +41,7 @@
 
 <style>
     body {
-        /*background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");*/
+        background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");
     }
 </style>
 
