@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from './store';
 
-const vm = new Vue();
-const vueRouter = new VueRouter({
+Vue.use(VueRouter);
+let vm = new Vue();
+let vueRouter = new VueRouter({
     routes: [
         {
             path: '/',

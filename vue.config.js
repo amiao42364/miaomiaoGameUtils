@@ -10,12 +10,7 @@ module.exports = {
     productionSourceMap: false,
     configureWebpack: {
         externals: {
-            'vue': 'Vue',
-            'vuex': 'Vuex',
-            'vue-router': 'VueRouter',
-            'element-ui': 'ELEMENT',
-            'Axios': 'axios',
-            'Clipboard': 'clipboard'
+
         },
         plugins: [
             new BundleAnalyzerPlugin()
