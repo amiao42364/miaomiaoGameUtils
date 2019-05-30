@@ -1,5 +1,5 @@
 <template>
-    <el-container style="background: #DCDFE6; height: auto;">
+    <el-container style="background: #DCDFE6; height: 100%;">
         <el-main>
             <el-row>
                 <el-button type="primary" @click="search(1)">寻访一次</el-button>
@@ -35,7 +35,7 @@
             </el-row>
             <div class="line"></div>
             <el-row v-bind:class="{tableShow: isShow}">
-                <el-table :data="characterData" stripe border :height="tableHeight" style="width: 100%;">
+                <el-table :data="characterData" stripe border style="width: 100%;">
                     <el-table-column prop="level" label="稀有度" min-width="20%">
                         <template slot-scope="scope">
                             <div slot="reference">
@@ -118,7 +118,6 @@
                 upContext: "",
                 up2Context: "",
                 isShow: true,
-                tableHeight: document.documentElement.clientHeight - 370 + "px",
                 characterData: [],
                 statisticData: [{
                     totalCount: 0,
@@ -269,7 +268,7 @@
                 // 写入图片url
                 character.url = _this.$globalConfig.DEFAULT_OSS_URL_CHARACTER + character.id + _this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_25";
                 // 写入当前序号
-                if ("Index.vue" in character) {
+                if ("index" in character) {
                     character.index.push(baseData.totalCount);
                 } else {
                     character.index = [baseData.totalCount];
