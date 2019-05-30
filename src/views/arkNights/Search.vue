@@ -19,6 +19,13 @@
             </el-row>
             <div class="line"></div>
             <el-row>
+                <span>
+                    <el-switch v-model="up2Value" active-color="#13ce66" inactive-color="#ff4949" @change="up2Change"></el-switch>
+                </span>
+                <span v-html="up2Context" style="margin-left: 5px;"></span>
+            </el-row>
+            <div class="line"></div>
+            <el-row>
                 <el-table :data="statisticData" stripe border style="width: 100%;">
                     <el-table-column prop="totalCount" label="寻访数" min-width="20%"></el-table-column>
                     <el-table-column prop="lv6Count" label="六星获取率" min-width="20%"></el-table-column>
@@ -107,7 +114,9 @@
                 },
                 arkCharactersData: {},
                 upValue: true,
+                up2Value: false,
                 upContext: "",
+                up2Context: "",
                 isShow: true,
                 tableHeight: document.documentElement.clientHeight - 370 + "px",
                 characterData: [],
@@ -120,16 +129,23 @@
             };
         },
         methods: {
-            upChange: function(value) {
+            upChange: function (value) {
                 this.upContext = this.generateUpContent(value);
+                this.up2Value = !value;
+                this.up2Context = this.generateUpContent(!value, true);
             },
-            search: function(count) {
+            up2Change: function (value) {
+                this.up2Context = this.generateUpContent(value, true);
+                this.upValue = !value;
+                this.upContext = this.generateUpContent(!value);
+            },
+            search: function (count) {
                 this.isShow = false;
                 let baseData = this.arkNightsData;
                 let result = this.searchMain(count, baseData);
                 this.statistics(result);
             },
-            removeStatistic: function() {
+            removeStatistic: function () {
                 this.isShow = true;
                 this.statisticData = [{
                     totalCount: 0,
@@ -152,16 +168,25 @@
                     characters: {}  // 已经抽取到的人物
                 };
             },
-            generateUpContent: function(upSwitch) {
+            generateUpContent: function (upSwitch, activity) {
                 if (!upSwitch) {
-                    return "当前关闭活动UP";
+                    if(activity){
+                        return "当前关闭活动UP";
+                    }
+                    return "当前关闭标准寻访UP";
                 }
+                let prefix = "up";
+                let content = "当前开启标准寻访UP:";
+                if (activity) {
+                    prefix = "up2";
+                    content = "当前开启活动UP:";
+                }
+
                 const _this = this;
-                let content = "当前开启活动UP:";
                 let flag = false; //标记是否存在活动池
                 for (let level = 6; level >= 3; level--) {
-                    if (_this.arkCharactersData.hasOwnProperty("level" + level + "up")) {
-                        let array = _this.arkCharactersData["level" + level + "up"];
+                    if (_this.arkCharactersData.hasOwnProperty("level" + level + prefix)) {
+                        let array = _this.arkCharactersData["level" + level + prefix];
                         if (array.length > 0) {
                             if (flag) {
                                 content += ", ";
@@ -185,7 +210,7 @@
                     return "当前无活动up";
                 }
             },
-            searchMain: function(count, baseData) {
+            searchMain: function (count, baseData) {
                 for (let i = 0; i < count; i++) {
                     baseData.totalCount += 1;
                     // 先判断人物星级
@@ -215,7 +240,7 @@
                 }
                 return baseData;
             },
-            addCharacter: function(baseData, level) {
+            addCharacter: function (baseData, level) {
                 const _this = this;
                 // 判断是否为活动池
                 let upCharacter = false;
@@ -227,10 +252,14 @@
                 }
                 // 获取池子数据
                 let pool = [];
+                let prefix = "up";
+                if(_this.up2Value){
+                    prefix = "up2";
+                }
                 if (upCharacter) {
-                    pool = _this.arkCharactersData["level" + level + "up"] == null || _this.arkCharactersData["level" + level + "up"].length === 0
+                    pool = _this.arkCharactersData["level" + level + prefix] == null || _this.arkCharactersData["level" + level + prefix].length === 0
                         ? _this.arkCharactersData["level" + level]
-                        : _this.arkCharactersData["level" + level + "up"];
+                        : _this.arkCharactersData["level" + level + prefix];
                 } else {
                     pool = _this.arkCharactersData["level" + level];
                 }
@@ -253,7 +282,7 @@
                 let selfPool = baseData.characters["level" + level];
                 this.judgeContain(selfPool, character);
             },
-            judgeContain: function(selfPool, character) {
+            judgeContain: function (selfPool, character) {
                 if (null == selfPool || 0 === selfPool.length) {
                     character.count = 1;
                     selfPool.push(character);
@@ -268,14 +297,14 @@
                     selfPool.push(character);
                 }
             },
-            statistics: function(result) {
+            statistics: function (result) {
                 let characterData = [];
                 let statisticData = [];
                 this.packageData(characterData, statisticData, result);
                 this.characterData = characterData;
                 this.statisticData = statisticData;
             },
-            packageData: function(characterData, statisticData, result) {
+            packageData: function (characterData, statisticData, result) {
                 // 组装干员数据
                 let characters = result.characters;
                 for (let lv = 6; lv >= 3; lv--) {
@@ -312,7 +341,7 @@
                     appraise: appraise
                 });
             },
-            getAppraise: function(lv6Count, totalCount) {
+            getAppraise: function (lv6Count, totalCount) {
                 // 数学期望34.5抽可以获得一个六星干员
                 let avgRate = 0.02899;
                 let actualRate = (lv6Count / totalCount).toFixed(5);
@@ -335,6 +364,7 @@
                 .then(function (response) {
                     _this.arkCharactersData = response.content;
                     _this.upContext = _this.generateUpContent(true);
+                    _this.up2Context = _this.generateUpContent(false, true);
                 });
         }
     };
