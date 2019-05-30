@@ -2,7 +2,6 @@
     <el-container style="height: 100%; background: #DCDFE6">
         <el-header style="height: auto;">
             <h1>请输入需要的材料及已拥有的数量，点击过滤去除不相关及数量足够的物品</h1>
-            <h6>算法也许写的会有问题，掉落地点也有可能有错误，发现任何问题立即联系阿喵修改哦</h6>
             <el-row>
                 <el-button size="mini" type="primary" @click="resetNum">重置</el-button>
                 <el-button size="mini" type="success" @click="filter">过滤</el-button>
@@ -12,9 +11,12 @@
             <el-col v-bind:style="itemColStyle(baseData[key]['colorId'])" v-show="baseData[key].isShow"
                     v-for="key in Object.keys(baseData)">
                 <el-card :body-style="{ padding: '0px' }" class="card-main">
-                    <el-tooltip :content="baseData[key].desc" placement="bottom" effect="light">
-                        <img :src="getItemImg(baseData[key].name)" class="image" :alt="baseData[key].name">
-                    </el-tooltip>
+                    <div class="img-parent">
+                        <el-tooltip :content="baseData[key].desc" placement="bottom" effect="light">
+                            <img :src="getItemImg(baseData[key].name)" class="img-image" :alt="baseData[key].name">
+                        </el-tooltip>
+                        <img :src="getItemBoard(baseData[key].level)" class="img-board" :alt="baseData[key].name">
+                    </div>
                     <div class="card-text">
                         <span v-bind:style="boxFontStyle(baseData[key]['colorId'])">{{baseData[key].name}}</span>
                         <br>
@@ -25,10 +27,10 @@
                         <span v-for="dropKey in Object.keys(baseData[key].drop)">{{dropKey}}：{{baseData[key].drop[dropKey]}}<br></span>
                     </div>
                     <div class="card-bottom">
-                        <el-input @input="numInputRequire(key)" style="width: 50%" v-model="baseData[key].require"
+                        <el-input @input="numInputRequire(key)" class="bottom-input" v-model="baseData[key].require"
                                   size="mini"
                                   placeholder="需求"></el-input>
-                        <el-input @input="numInputHave(key)" style="width: 50%" v-model="baseData[key].have"
+                        <el-input @input="numInputHave(key)" class="bottom-input" v-model="baseData[key].have"
                                   size="mini"
                                   placeholder="已有"></el-input>
                     </div>
@@ -47,16 +49,41 @@
 
     .card-drop {
         text-align: center;
-        font-size: 14px;
-        height: 40px;
+        font-size: 12px;
+        height: 35px;
     }
 
-    .card-bottom {
+    .img-image {
+        position:absolute;
+        z-index: 10;
+        left:0; right:0; top:0; bottom:0;
+        margin:auto;
+    }
+    .img-board {
+        position:absolute;
+        z-index: 5;
+        left:0; right:0; top:0; bottom:0;
+        margin:auto;
+    }
 
+    .img-parent {
+        margin-top: 5px;
+        position:relative;
+        height: 55px;
     }
 
     .card-main {
         width: 108px;
+    }
+
+    .bottom-input {
+        width: 48px;
+        margin-left: 4px;
+        margin-bottom: 4px;
+    }
+    .bottom-input input{
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
 </style>
@@ -90,7 +117,10 @@
         },
         methods: {
             getItemImg: function (name) {
-                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + name + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_100";
+                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + name + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_48,h_48";
+            },
+            getItemBoard: function (level) {
+                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + "level" + level + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_50,h_50";
             },
             resetNum: function () {
                 const _this = this;
