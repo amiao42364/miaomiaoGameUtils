@@ -101,6 +101,14 @@
                                         <el-image class="characterIcon" :src="item.url"></el-image>
                                         {{item.name}}
                                     </el-tag>
+                                    <el-tag size="large" class="level2Color tag-style" v-if="2 === item.level">
+                                        <el-image class="characterIcon" :src="item.url"></el-image>
+                                        {{item.name}}
+                                    </el-tag>
+                                    <el-tag size="large" class="level1Color tag-style" v-if="1 === item.level">
+                                        <el-image class="characterIcon" :src="item.url"></el-image>
+                                        {{item.name}}
+                                    </el-tag>
                                 </el-tooltip>
                             </div>
                         </template>

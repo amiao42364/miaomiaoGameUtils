@@ -40,6 +40,14 @@
     color: #6666FF
 }
 
+.level2Color {
+    color: #000000
+}
+
+.level1Color {
+    color: #00ff17
+}
+
 .characterIcon {
     width: 25px;
     height: 25px;

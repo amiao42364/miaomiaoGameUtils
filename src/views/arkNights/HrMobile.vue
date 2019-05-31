@@ -88,6 +88,8 @@
                                     <el-tag size="large" class="level5Color tag-style" v-if="5 === item.level">{{item.name}}</el-tag>
                                     <el-tag size="large" class="level4Color tag-style" v-if="4 === item.level">{{item.name}}</el-tag>
                                     <el-tag size="large" class="level3Color tag-style" v-if="3 === item.level">{{item.name}}</el-tag>
+                                    <el-tag size="large" class="level2Color tag-style" v-if="2 === item.level">{{item.name}}</el-tag>
+                                    <el-tag size="large" class="level1Color tag-style" v-if="1 === item.level">{{item.name}}</el-tag>
                                 </el-tooltip>
                             </div>
                         </template>
