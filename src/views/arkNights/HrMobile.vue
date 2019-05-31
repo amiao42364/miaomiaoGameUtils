@@ -1,6 +1,6 @@
 <template>
     <el-container style="height: 100%;background: #DCDFE6;">
-        <el-main style="margin-top: 10px">
+        <el-main>
             <el-row>
                 <el-card class="box-card">
                     <div>
@@ -71,7 +71,7 @@
                     </div>
                 </el-card>
             </el-row>
-            <el-row style="margin-top: 15px;">
+            <el-row style="margin-top: 0.5rem;">
                 <el-table :data="tableData" stripe border style="width: 100%;background: #DCDFE6;">
                     <el-table-column prop="tags" label="标签" min-width="30%">
                         <template slot-scope="scope">
@@ -83,24 +83,11 @@
                     <el-table-column prop="characters" label="可能出现" min-width="70%">
                         <template slot-scope="scope">
                             <div slot="reference">
-                                <el-tooltip v-for="item in scope.row.characters" :content="item.record" width="250" effect="light"
-                                            placement="top">
-                                    <el-tag size="large" class="level6Color tag-style" v-if="6 === item.level">
-                                        <el-image class="characterIcon" :src="item.url"></el-image>
-                                        {{item.name}}
-                                    </el-tag>
-                                    <el-tag size="large" class="level5Color tag-style" v-if="5 === item.level">
-                                        <el-image class="characterIcon" :src="item.url"></el-image>
-                                        {{item.name}}
-                                    </el-tag>
-                                    <el-tag size="large" class="level4Color tag-style" v-if="4 === item.level">
-                                        <el-image class="characterIcon" :src="item.url"></el-image>
-                                        {{item.name}}
-                                    </el-tag>
-                                    <el-tag size="large" class="level3Color tag-style" v-if="3 === item.level">
-                                        <el-image class="characterIcon" :src="item.url"></el-image>
-                                        {{item.name}}
-                                    </el-tag>
+                                <el-tooltip v-for="item in scope.row.characters" :content="item.record" effect="light" placement="top">
+                                    <el-tag size="large" class="level6Color tag-style" v-if="6 === item.level">{{item.name}}</el-tag>
+                                    <el-tag size="large" class="level5Color tag-style" v-if="5 === item.level">{{item.name}}</el-tag>
+                                    <el-tag size="large" class="level4Color tag-style" v-if="4 === item.level">{{item.name}}</el-tag>
+                                    <el-tag size="large" class="level3Color tag-style" v-if="3 === item.level">{{item.name}}</el-tag>
                                 </el-tooltip>
                             </div>
                         </template>
@@ -112,8 +99,15 @@
 </template>
 
 <style>
+    .el-main{
+        padding: 0.5rem;
+    }
+    .el-header{
+        padding: 0 0.5rem;
+    }
+
     .row-style {
-        margin-bottom: 15px;
+        margin-bottom: 0.2rem;
         display: flex;
     }
 
@@ -123,26 +117,25 @@
 
     .button-group {
         float: left;
-        margin-left: 10px;
+        margin-left: 0.3rem;
     }
 
     .button-group button {
-        margin-bottom: 10px;
+        margin-bottom: 0.2rem;
         margin-left: 0 !important;
-        margin-right: 10px;
+        margin-right: 0.2rem;
     }
 
     .button-diy {
         color: #67C23A;
         background: #f0f9eb;
-        padding: 9px 15px;
-        font-size: 12px;
-        border-radius: 3px;
+        padding: 0.2rem 0.3rem;
+        border-radius: 0.2rem;
         display: inline-block;
         line-height: 1;
         white-space: nowrap;
         cursor: pointer;
-        border: 1px solid #c2e7b0;
+        border: 0.08rem solid #c2e7b0;
         -webkit-appearance: none;
         text-align: center;
         box-sizing: border-box;
@@ -159,8 +152,19 @@
     }
 
     .tag-style {
-        margin-right: 5px;
-        margin-bottom: 2px;
+        margin-right: 0.4rem;
+        margin-bottom: 0.16rem;
+    }
+    .box-card .el-card__body{
+        padding: 0.4rem;
+    }
+    .button-head button{
+        padding: 0.2rem 0.3rem;
+    }
+    .el-tooltip{
+        height: 1.5rem;
+        line-height: 1.5rem;
+        padding: 0 0.3rem;
     }
 </style>
 

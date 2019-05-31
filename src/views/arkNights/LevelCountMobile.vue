@@ -1,6 +1,6 @@
 <template>
     <el-container style="height: 100%;">
-        <el-main style="margin-top: 10px">
+        <el-main>
             <el-card class="box-card" shadow="always" style="background: #DCDFE6;">
                 <div slot="header">
                     <span>
@@ -19,12 +19,13 @@
                             </el-dropdown>
                     </span>
                 </div>
-                <el-row style="margin-bottom: 15px;">
-                    <el-col :span="11">
+                <el-row style="margin-bottom: 0.5rem;">
+                    <el-col>
                         <el-card class="box-card" shadow="always">
                             <el-row class="row-class">
-                                <span class="float-left" style="width: 100px;">当前等级：</span>
-                                <el-input @input="inputCurLevel" clearable placeholder="等级" v-model="curLevel" class="input-with-select">
+                                <span class="float-left row-span-label">当前等级：</span>
+                                <el-input size="mini" @input="inputCurLevel" clearable placeholder="等级" v-model="curLevel"
+                                          class="input-with-select">
                                     <el-select v-model="curPower" slot="prepend" placeholder="未精英化" value="0">
                                         <el-option label="未精英化" value="0"></el-option>
                                         <el-option :disabled="disabledPower1" label="精英化1" value="1"></el-option>
@@ -33,8 +34,8 @@
                                 </el-input>
                             </el-row>
                             <el-row class="row-class">
-                                <span class="float-left" style="width: 100px;">目标等级：</span>
-                                <el-input @input="inputTargetLevel" clearable placeholder="等级" v-model="targetLevel"
+                                <span class="float-left row-span-label">目标等级：</span>
+                                <el-input size="mini" @input="inputTargetLevel" clearable placeholder="等级" v-model="targetLevel"
                                           class="input-with-select">
                                     <el-select v-model="targetPower" slot="prepend" placeholder="未精英化" value="2">
                                         <el-option label="未精英化" value="0"></el-option>
@@ -44,25 +45,25 @@
                                 </el-input>
                             </el-row>
                             <el-row class="row-class">
-                                <span style="width: 100px;">当前经验：</span>
-                                <el-input @input="inputCurExp" clearable v-model="curExp" placeholder="经验"></el-input>
+                                <span class="row-span-label">当前经验：</span>
+                                <el-input size="mini" @input="inputCurExp" clearable v-model="curExp" placeholder="经验"></el-input>
                             </el-row>
                             <el-row class="row-class">
-                                <span style="width: 100px;">当前金钱：</span>
-                                <el-input @input="inputCurMoney" v-model="curMoney" clearable placeholder="龙门币"></el-input>
+                                <span class="row-span-label">当前金钱：</span>
+                                <el-input size="mini" @input="inputCurMoney" v-model="curMoney" clearable placeholder="龙门币"></el-input>
                             </el-row>
                             <el-row class="row-class">
                                 <div class="img-book-div">
                                     <el-image class="img-book" :src="bookLevel5" fit="fit"></el-image>
                                     <el-image class="img-board" :src="board5" fit="fit"></el-image>
                                 </div>
-                                <el-input class="img-book-input" @input="inputBook" clearable v-model="curBookLv4"
+                                <el-input class="img-book-input" size="mini" @input="inputBook" clearable v-model="curBookLv4"
                                           placeholder="数量"></el-input>
                                 <div class="img-book-div">
                                     <el-image class="img-book" :src="bookLevel4" fit="fit"></el-image>
                                     <el-image class="img-board" :src="board4" fit="fit"></el-image>
                                 </div>
-                                <el-input class="img-book-input" @input="inputBook" clearable v-model="curBookLv3"
+                                <el-input class="img-book-input" size="mini" @input="inputBook" clearable v-model="curBookLv3"
                                           placeholder="数量"></el-input>
                             </el-row>
                             <el-row class="row-class">
@@ -70,18 +71,18 @@
                                     <el-image class="img-book" :src="bookLevel3" fit="fit"></el-image>
                                     <el-image class="img-board" :src="board3" fit="fit"></el-image>
                                 </div>
-                                <el-input class="img-book-input" @input="inputBook" clearable v-model="curBookLv2"
+                                <el-input class="img-book-input" size="mini" @input="inputBook" clearable v-model="curBookLv2"
                                           placeholder="数量"></el-input>
                                 <div class="img-book-div">
                                     <el-image class="img-book" :src="bookLevel2" fit="fit"></el-image>
                                     <el-image class="img-board" :src="board2" fit="fit"></el-image>
                                 </div>
-                                <el-input class="img-book-input" @input="inputBook" clearable v-model="curBookLv1"
+                                <el-input class="img-book-input" size="mini" @input="inputBook" clearable v-model="curBookLv1"
                                           placeholder="数量"></el-input>
                             </el-row>
                         </el-card>
                     </el-col>
-                    <el-col :span="11" style="margin-left: 20px;">
+                    <el-col style="margin-top: 0.5rem">
                         <el-card class="box-card" shadow="always">
                             <div slot="header">
                                 结果
@@ -99,15 +100,13 @@
 </template>
 
 <style>
-    .row-class {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
+    .el-main {
+        padding: 0.5rem;
     }
     .img-book-div{
         position:relative;
-        width: 40px;
-        height: 40px;
+        width: 1.7rem;
+        height: 1.7rem;
     }
     .img-book{
         position:absolute;
@@ -122,24 +121,35 @@
         margin:auto;
     }
     .img-book-input {
-        width: 85px;
-        margin-left: 5px;
-        margin-right: 5px;
+        width: 6rem;
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+    }
+
+    .el-header {
+        padding: 0 0.5rem;
+    }
+
+    .row-class {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.3rem;
     }
 
     .input-with-select .el-input-group__prepend {
         background-color: #fff;
-        width: 65px;
+        width: 3.4rem;
     }
 
-    .el-card__body {
-        padding: 15px
+    .row-span-label {
+        width: 6.5rem;
     }
 
 </style>
 
 <script>
     import level from "./levelCount.js"
+
     export default {
         data() {
             return {
@@ -157,9 +167,9 @@
                 disabledPower2: false,
                 curStar: "六星干员",
                 curPower: "0",
-                curLevel: 1,
+                curLevel: 0,
                 targetPower: "2",
-                targetLevel: 1,
+                targetLevel: 0,
                 curExp: 0,
                 curMoney: 0,
                 curBookLv4: 0,
@@ -179,7 +189,7 @@
                 // 限制只能输入数字
                 curLevel = curLevel.replace(/[^0-9]/ig, "");
                 let maxLevel = level.getMaxLevel(this, this.curPower);
-                curLevel = Number.parseInt(curLevel) ? Number.parseInt(curLevel) : 1;
+                curLevel = Number.parseInt(curLevel) ? Number.parseInt(curLevel) : 0;
                 if (curLevel > maxLevel) {
                     curLevel = maxLevel;
                 }
@@ -190,7 +200,7 @@
                 // 限制只能输入数字
                 targetLevel = targetLevel.replace(/[^0-9]/ig, "");
                 let maxLevel = level.getMaxLevel(this, this.targetPower);
-                targetLevel = Number.parseInt(targetLevel) ? Number.parseInt(targetLevel) : 1;
+                targetLevel = Number.parseInt(targetLevel) ? Number.parseInt(targetLevel) : 0;
                 if (targetLevel > maxLevel) {
                     targetLevel = maxLevel;
                 }
@@ -237,6 +247,12 @@
                 }
             },
             calculation: function () {
+                if(this.curLevel === 0){
+                    this.curLevel = 1;
+                }
+                if(this.targetLevel === 0){
+                    this.targetLevel = 1;
+                }
                 level.calculation(this);
             }
         },

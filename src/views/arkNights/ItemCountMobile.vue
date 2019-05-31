@@ -7,7 +7,7 @@
                 <el-button size="mini" type="success" @click="filter">过滤</el-button>
             </el-row>
         </el-header>
-        <el-main style="margin-top: 10px">
+        <el-main>
             <el-col v-bind:style="itemColStyle(baseData[key]['colorId'])" v-show="baseData[key].isShow"
                     v-for="key in Object.keys(baseData)">
                 <el-card :body-style="{ padding: '0px' }" class="card-main">
@@ -20,7 +20,7 @@
                     <div class="card-text">
                         <span v-bind:style="boxFontStyle(baseData[key]['colorId'])">{{baseData[key].name}}</span>
                         <br>
-                        <span v-html="baseData[key].needHtml"></span>
+                        <span class="mini-text" v-html="baseData[key].needHtml"></span>
                     </div>
                     <el-row style="border-top: 1px solid #000000"></el-row>
                     <div class="card-drop">
@@ -41,16 +41,25 @@
 </template>
 
 <style>
+    .el-main{
+        padding: 0.5rem;
+    }
+    .el-header{
+        padding: 0 0.5rem;
+    }
     .card-text {
         text-align: center;
         font-size: 14px;
-        height: 40px;
+        height: 2.5rem;
+    }
+    .mini-text {
+        font-size: 12px;
     }
 
     .card-drop {
         text-align: center;
         font-size: 12px;
-        height: 35px;
+        height: 2rem;
     }
 
     .img-image {
@@ -67,23 +76,23 @@
     }
 
     .img-parent {
-        margin-top: 5px;
+        margin-top: 0.1rem;
         position:relative;
-        height: 55px;
+        height: 1.7rem;
     }
 
     .card-main {
-        width: 108px;
+        width: 6rem;
     }
 
     .bottom-input {
-        width: 48px;
-        margin-left: 4px;
-        margin-bottom: 4px;
+        width: 2.6rem;
+        margin-left: 0.35rem;
+        margin-bottom: 0.2rem;
     }
     .bottom-input input{
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
     }
 
 </style>
@@ -108,9 +117,9 @@
                 },
                 itemColStyle: function (colorId) {
                     return {
-                        "margin-right": "10px",
-                        "margin-bottom": "10px",
-                        "width": "114px",
+                        "margin-right": "0.1rem",
+                        "margin-bottom": "0.1rem",
+                        "width": "6.4rem",
                         "border": "2px solid " + this.colorData[colorId]
                     }
                 }
@@ -118,10 +127,10 @@
         },
         methods: {
             getItemImg: function (name) {
-                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + name + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_48,h_48";
+                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + name + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_24,h_24";
             },
             getItemBoard: function (level) {
-                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + "level" + level + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_50,h_50";
+                return this.$globalConfig.DEFAULT_OSS_URL_ITEM + "level" + level + this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_25,h_25";
             },
             resetNum: function () {
                 const _this = this;
