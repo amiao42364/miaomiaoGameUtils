@@ -3,7 +3,8 @@
         <el-main>
             <el-row>
                 <el-card class="box-card">
-                    <div>
+                    <el-button @click="removeSelected" size="mini" type="danger">清除选择</el-button>
+                    <div style="margin-top: 0.3rem;" ref="buttonDivRefs">
                         <el-row class="row-style">
                             <div class="button-head">
                                 <el-button type="primary" size="small">资质</el-button>
@@ -148,11 +149,6 @@
         -ms-user-select: none;
     }
 
-    .button-diy:hover {
-        color: #f0f9eb;
-        background: #67C23A;
-    }
-
     .tag-style {
         margin-right: 0.4rem;
         margin-bottom: 0.16rem;
@@ -183,6 +179,9 @@
         methods: {
             hr_click: function (button) {
                 hr.hr_click(button, this);
+            },
+            removeSelected: function () {
+                hr.removeSelected(this, "buttonDivRefs");
             }
         },
         created() {

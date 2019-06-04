@@ -9,16 +9,7 @@ function hr_click(button, _this) {
             }
         }
         _this.selectedButton.filter(item => item !== value);
-        button.path[0].style.color = "#67C23A";
-        button.path[0].style.background = "#f0f9eb";
-        button.path[0].onmouseover = function () {
-            this.style.color = "#f0f9eb";
-            this.style.background = "#67C23A";
-        };
-        button.path[0].onmouseleave = function () {
-            this.style.color = "#67C23A";
-            this.style.background = "#f0f9eb";
-        };
+        changeStyle(_this, button.path[0], false);
         hr_init(_this);
         return;
     }
@@ -27,12 +18,7 @@ function hr_click(button, _this) {
         return;
     }
     // 渲染样式
-    button.path[0].style.color = "#f0f9eb";
-    button.path[0].style.background = "#67C23A";
-    button.path[0].onmouseover = function () {
-    };
-    button.path[0].onmouseleave = function () {
-    };
+    changeStyle(_this, button.path[0], true);
     _this.selectedButton.push(value);
     hr_init(_this);
 }
@@ -62,11 +48,11 @@ function hr_init(_this) {
             if (flag) {
                 character.url = _this.$globalConfig.DEFAULT_OSS_URL_CHARACTER + character.id + _this.$globalConfig.DEFAULT_OSS_SUFFIX + "?x-oss-process=image/resize,w_25";
                 // 六星干员必须有“高级资深干员”标签
-                if(character.level === 6){
-                    if(tempAry.indexOf("高级资深干员") > -1){
+                if (character.level === 6) {
+                    if (tempAry.indexOf("高级资深干员") > -1) {
                         characters.push(character);
                     }
-                }else{
+                } else {
                     characters.push(character);
                 }
             }
@@ -109,6 +95,52 @@ function getCombo(_this, result, data, count, initial) {
     }
 }
 
+/**
+ * 改变标签按钮样式
+ * @param _this _this
+ * @param button dom对象
+ * @param selected 是否选中
+ */
+function changeStyle(_this, button, selected) {
+    if (selected) {
+        button.style.color = "#f0f9eb";
+        button.style.background = "#67C23A";
+        button.onmouseover = function () {
+        };
+        button.onmouseleave = function () {
+        };
+    } else {
+        button.style.color = "#67C23A";
+        button.style.background = "#f0f9eb";
+        if(_this.$commonUtil.isPC()){
+            button.onmouseover = function () {
+                this.style.color = "#f0f9eb";
+                this.style.background = "#67C23A";
+            };
+            button.onmouseleave = function () {
+                this.style.color = "#67C23A";
+                this.style.background = "#f0f9eb";
+            };
+        }
+    }
+}
+
+/**
+ * 清除所选标签
+ */
+function removeSelected(_this, refs) {
+    _this.selectedButton = [];
+    _this.tableData = [];
+    let div = _this.$refs[refs];
+    for (let i = 0; i < div.children.length; i++) {
+        let buttons = div.children[i].children[1].children;
+        for (let j = 0; j < buttons.length; j++) {
+            changeStyle(_this, buttons[j], false);
+        }
+    }
+}
+
 export default {
-    hr_click
+    hr_click,
+    removeSelected
 }
