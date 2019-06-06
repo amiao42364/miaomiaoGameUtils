@@ -107,6 +107,14 @@ let vueRouter = new VueRouter({
             }
         },
         {
+            path: '/majsoul/moqie',
+            name: '雀魂-模切一百问',
+            component: () => import('../views/majsoul/MoQie.vue'),
+            meta: {
+                title: '雀魂-模切一百问'
+            }
+        },
+        {
             path: '/csgo/config',
             name: 'csgo-一键配置',
             component: () => import('../views/csgo/Index.vue'),

@@ -21,6 +21,10 @@
                             <template slot="title">CSGO</template>
                             <el-menu-item index="/csGo/config">一键配置</el-menu-item>
                         </el-submenu>
+                        <el-submenu index="/majsoul">
+                            <template slot="title">雀魂</template>
+                            <el-menu-item index="/majsoul/moqie">和切？</el-menu-item>
+                        </el-submenu>
                         <el-submenu index="/person" v-show="showPersonInfo" style="float: right;">
                             <template slot="title">
                                 <el-image class="characterIcon" :src=headImg></el-image>
@@ -41,7 +45,7 @@
 
 <style>
     body {
-        background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");
+        /*background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");*/
     }
 </style>
 
