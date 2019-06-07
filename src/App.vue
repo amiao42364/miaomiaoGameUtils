@@ -45,7 +45,7 @@
 
 <style>
     body {
-        /*background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");*/
+        background: url("https://arknights.oss-cn-shanghai.aliyuncs.com/background.jpg");
     }
 </style>
 

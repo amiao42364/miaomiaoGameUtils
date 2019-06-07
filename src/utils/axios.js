@@ -44,7 +44,7 @@ axios.interceptors.response.use(function (response) {
         } else {
             vm.$notify.error({
                 title: "错误",
-                message: response.data.message
+                message: response.data.message + "：" + response.data.content
             });
             return Promise.reject(response.data.message);
         }
