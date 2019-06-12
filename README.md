@@ -1,7 +1,7 @@
 # miaomiaoGameUtils
 网游手游小工具
 ## vue萌新初学做的练手项目
-网站：http://shuijiaomao/
+网站：http://shuijiaomao.com
 # 如何启动项目
 1、安装最新版nodeJs
 
@@ -28,4 +28,6 @@ npm run serve
 
 5、csgo-启动项配置
 
-6、有其他想要实现的功能可以让我试试做着看哦
+6、雀魂模切牌谱(摸鱼实现中……)
+
+7、有其他想要实现的功能可以让我试试做着看哦
