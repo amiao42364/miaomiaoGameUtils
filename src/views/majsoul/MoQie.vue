@@ -10,14 +10,13 @@
             </el-card>
             <!--答题区域-->
             <el-card v-show="showMain" class="box-card main">
-                <el-row>
-                    <div class="card-main">
-                        <div class="majsoul-card" @click="selectAnswer(card)" v-for="card in question['card']">{{card}}</div>
-                    </div>
+                <el-row class="card-main">
+                    <div class="majsoul-card" v-bind:style="cardBackground(card)" @click="selectAnswer(card)" v-for="card in answer_card"></div>
                 </el-row>
-                <el-row>
-                    <div v-show="showAnswer" class="card-answer">
-                        <!--<div class="majsoul-answer" v-for="answer in baseData.answer">{{answer.desc}}</div>-->
+                <el-row v-show="showAnswer" class="card-answer">
+                    <div class="majsoul-answer" v-for="answer in baseData.answers">
+                        <div v-bind:style="cardBackground(answer.keyCard)" class="majsoul-card"></div>
+                        {{answer.keyDesc}}
                     </div>
                 </el-row>
             </el-card>
@@ -70,8 +69,8 @@
     }
 
     .main {
-        width: 500px;
-        height: 400px;
+        width: 685px;
+        height: 600px;
     }
 
     .upload {
@@ -118,14 +117,14 @@
     export default {
         data() {
             return {
-                baseData: [], //从服务端获取的题目
-                question: {}, //当前题目
+                baseData: {}, //从服务端获取的题目
                 showStart: true, //展示开始界面
                 showMain: false, //展示题目主界面
                 showUpload: false, //展示上传界面
                 showAnswer: false, //展示答案界面
                 showUploadSelected: true, // 展示上传-选牌区
                 showUploadAnswer: false, // 展示上传-切牌作答区
+                answer_card: [], // 答题时的麻将牌
                 upload_allCard: ["1m", "1m", "1m", "1m", "2m", "2m", "2m", "2m", "3m", "3m", "3m", "3m", "4m",
                     "4m", "4m", "4m", "5m", "5m", "5m", "0m", "6m", "6m", "6m", "6m", "7m", "7m", "7m", "7m",
                     "8m", "8m", "8m", "8m", "9m", "9m", "9m", "9m", "1p", "1p", "1p", "1p", "2p", "2p", "2p",
@@ -146,15 +145,19 @@
             // 开始答题
             startChong: function () {
                 const _this = this;
-                _this.axios.get(_this.$globalConfig.DEFAULT_API_URL + "/majsoul/get?limit=10")
+                _this.axios.get(_this.$globalConfig.DEFAULT_API_URL + "/majsoul/get")
                     .then(function (response) {
                         _this.baseData = response.content;
-                        if (_this.baseData == null || _this.baseData.length === 0) {
+                        if (_this.baseData == null || _this.baseData === "") {
                             _this.$notify.error({
                                 title: '错误',
                                 message: '当前题库没有题目'
                             });
                             return;
+                        }
+                        const tempCards = _this.baseData.card.split("");
+                        for (let i = 0; i < tempCards.length; i = i + 2) {
+                            _this.answer_card.push(tempCards[i] + tempCards[i + 1]);
                         }
                         _this.showStart = false;
                         _this.showUpload = false;
