@@ -2,7 +2,7 @@
     <el-container style="height: 100%">
         <el-main class="moqie-box-parent">
             <!--开始区域-->
-            <div v-show="showStart" class="start">
+            <div v-show="showStart" class="majsoul-start">
                 <el-row style="margin-top: 20px;">
                     <el-button @click="startChong" size="large" type="danger">开始放铳</el-button>
                 </el-row>
@@ -18,11 +18,11 @@
                 </el-row>
             </div>
             <!--答题区域-->
-            <div v-show="showMain" class="main">
-                <el-row class="card-main">
+            <div v-show="showMain" class="majsoul-main">
+                <el-row class="majsoul-card-main">
                     <div class="majsoul-card" v-bind:style="cardBackground(card)" @click="selectAnswer(card)" v-for="card in answer_card"></div>
                 </el-row>
-                <el-row v-show="showAnswer" class="card-answer">
+                <el-row v-show="showAnswer" class="majsoul-card-answer">
                     <div style="text-align: center;">
                         {{answer_judge}}
                     </div>
@@ -59,7 +59,7 @@
                 </el-row>
             </div>
             <!--上传区域-->
-            <div v-show="showUpload" class="upload">
+            <div v-show="showUpload" class="majsoul-upload">
                 <el-row>
                     <h1 ref="uploadTitle">请组成模切问答题目</h1>
                 </el-row>
@@ -122,14 +122,14 @@
         justify-content: center;
     }
 
-    .moqie-box-parent .start {
+    .moqie-box-parent .majsoul-start {
         width: 390px;
         height: 255px;
         background-color: rgba(144,147,153, 0.7);
         text-align: center;
     }
 
-    .moqie-box-parent .main {
+    .moqie-box-parent .majsoul-main {
         width: 685px;
         height: 600px;
         background-color: rgba(144,147,153, 0.7);
@@ -137,7 +137,7 @@
         position: relative;
     }
 
-    .moqie-box-parent .upload {
+    .moqie-box-parent .majsoul-upload {
         text-align: center;
         width: 685px;
         height: 600px;
@@ -145,14 +145,14 @@
         position: relative;
     }
 
-    .moqie-box-parent .card-main {
+    .moqie-box-parent .majsoul-card-main {
         margin-top: 15px;
         margin-left: 15px;
         display: flex;
         flex-wrap: wrap;
     }
 
-    .moqie-box-parent .card-answer {
+    .moqie-box-parent .majsoul-card-answer {
         height: 445px;
         position: relative;
         overflow-y: auto;
