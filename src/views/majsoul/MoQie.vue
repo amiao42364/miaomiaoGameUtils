@@ -122,14 +122,14 @@
         justify-content: center;
     }
 
-    .start {
+    .moqie-box-parent .start {
         width: 390px;
         height: 255px;
         background-color: rgba(144,147,153, 0.7);
         text-align: center;
     }
 
-    .main {
+    .moqie-box-parent .main {
         width: 685px;
         height: 600px;
         background-color: rgba(144,147,153, 0.7);
@@ -137,7 +137,7 @@
         position: relative;
     }
 
-    .upload {
+    .moqie-box-parent .upload {
         text-align: center;
         width: 685px;
         height: 600px;
@@ -145,14 +145,14 @@
         position: relative;
     }
 
-    .card-main {
+    .moqie-box-parent .card-main {
         margin-top: 15px;
         margin-left: 15px;
         display: flex;
         flex-wrap: wrap;
     }
 
-    .card-answer {
+    .moqie-box-parent .card-answer {
         height: 445px;
         position: relative;
         overflow-y: auto;
