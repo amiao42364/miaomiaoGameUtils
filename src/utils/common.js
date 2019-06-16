@@ -90,9 +90,19 @@ function get(key) {
     }
 }
 
+/**
+ * 从缓存删除
+ * @param key
+ */
+function del(key) {
+    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
+}
+
 export default {
     convertNum2Chinese,
     isPC,
     get,
-    set
+    set,
+    del
 }

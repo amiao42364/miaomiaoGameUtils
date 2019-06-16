@@ -108,10 +108,19 @@ let vueRouter = new VueRouter({
         },
         {
             path: '/majsoul/moqie',
-            name: '雀魂-模切一百问',
+            name: '雀魂-今日何切',
             component: () => import('../views/majsoul/MoQie.vue'),
             meta: {
-                title: '雀魂-模切一百问'
+                title: '雀魂-今日何切',
+                mobile: true
+            }
+        },
+        {
+            path: '/m/majsoul/moqie',
+            name: '雀魂-今日何切',
+            component: () => import('../views/majsoul/MoQieMobile.vue'),
+            meta: {
+                title: '雀魂-今日何切'
             }
         },
         {

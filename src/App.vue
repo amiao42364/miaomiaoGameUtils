@@ -23,7 +23,7 @@
                         </el-submenu>
                         <el-submenu index="/majsoul">
                             <template slot="title">雀魂</template>
-                            <el-menu-item index="/majsoul/moqie">和切？</el-menu-item>
+                            <el-menu-item index="/majsoul/moqie">今日何切？</el-menu-item>
                         </el-submenu>
                         <el-submenu index="/person" v-show="showPersonInfo" style="float: right;">
                             <template slot="title">
