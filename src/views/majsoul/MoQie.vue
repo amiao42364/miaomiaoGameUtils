@@ -10,10 +10,11 @@
                     <el-button @click="startUpload" size="large" type="success">上传牌谱</el-button>
                 </el-row>
                 <el-row style="text-align: left;margin-left: 15px;">
-                    <h4>内测版：</h4>
-                    <h4>1、会有很多bug</h4>
-                    <h4>2、点赞、个人信息等功能暂未实现，因为天气太热了</h4>
-                    <h4>3、目前上传暂时需要注册下</h4>
+                    <div>内测版：</div>
+                    <div>1、会有很多bug</div>
+                    <div>2、点赞、个人信息等功能暂未实现，因为天气太热了</div>
+                    <div>3、目前只考虑纯牌效，场况等功能暂未实现，因为天气太热了</div>
+                    <div>4、目前上传暂时需要注册下</div>
                 </el-row>
             </div>
             <!--答题区域-->
@@ -123,7 +124,7 @@
 
     .start {
         width: 390px;
-        height: 290px;
+        height: 255px;
         background-color: rgba(144,147,153, 0.7);
         text-align: center;
     }
